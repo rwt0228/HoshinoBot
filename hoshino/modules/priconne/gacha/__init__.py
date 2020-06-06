@@ -100,7 +100,6 @@ async def check_tenjo_num(session):
 @sv.on_command('gacha_1', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_1_aliases, only_to_me=True)
 async def gacha_1(session:CommandSession):
 
-    await check_jewel_num(session)
     uid = session.ctx['user_id']
     jewel_limit.increase(uid, 150)
 
@@ -121,7 +120,6 @@ async def gacha_1(session:CommandSession):
 async def gacha_10(session:CommandSession):
     SUPER_LUCKY_LINE = 170
 
-    await check_jewel_num(session)
     uid = session.ctx['user_id']
     jewel_limit.increase(uid, 1500)
 
@@ -155,7 +153,6 @@ async def gacha_10(session:CommandSession):
 @sv.on_command('gacha_300', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_300_aliases, only_to_me=True)
 async def gacha_300(session:CommandSession):
 
-    await check_tenjo_num(session)
     uid = session.ctx['user_id']
     tenjo_limit.increase(uid)
 
