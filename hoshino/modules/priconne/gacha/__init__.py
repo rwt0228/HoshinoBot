@@ -87,14 +87,14 @@ async def set_pool(session:CommandSession):
 
 async def check_jewel_num(session):
     uid = session.ctx['user_id']
-    if not jewel_limit.check(uid):
-        await session.finish(JEWEL_EXCEED_NOTICE, at_sender=True)
+    # if not jewel_limit.check(uid):
+    #     await session.finish(JEWEL_EXCEED_NOTICE, at_sender=True)
 
 
 async def check_tenjo_num(session):
     uid = session.ctx['user_id']
-    if not tenjo_limit.check(uid):
-        await session.finish(TENJO_EXCEED_NOTICE, at_sender=True)
+    # if not tenjo_limit.check(uid):
+    #     await session.finish(TENJO_EXCEED_NOTICE, at_sender=True)
 
 
 @sv.on_command('gacha_1', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_1_aliases, only_to_me=True)
