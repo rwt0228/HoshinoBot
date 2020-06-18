@@ -27,7 +27,7 @@ async def random_repeater(context):
     last_msg, is_repeated, p = group_stat[group_id]
     if last_msg == msg:     # 群友正在复读
         if not is_repeated:     # 机器人尚未复读过，开始测试复读
-            if random.random() < p:    # 概率测试通过，复读并设flag
+            if random.random() < 1:    # 概率测试通过，复读并设flag
                 try:
                     group_stat[group_id] = (msg, True, 0)
                     await bot.send(context, msg)
