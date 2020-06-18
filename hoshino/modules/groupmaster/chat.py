@@ -62,3 +62,7 @@ async def chat_clanba(bot, ctx):
 async def chat_neigui(bot, ctx):
     if random.random() < 0.10:
         await bot.send(ctx, R.img('内鬼.png').cqcode)
+
+@sv.on_command('给煤气大人请安', only_to_me=True)
+async def mychat_meiqi(session):
+    await session.send(R.img('煤气酱.jpg').cqcode)
