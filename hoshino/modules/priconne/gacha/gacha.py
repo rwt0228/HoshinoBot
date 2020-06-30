@@ -68,6 +68,23 @@ class Gacha(object):
         return result, hiishi
 
 
+    def gacha_fudai(self):
+        result = []
+        hiishi = 0
+        up = self.up_prob
+        s3 = self.s3_prob
+        s2 = self.s2_prob
+        s1 = 1000 - s3 - s2
+        for _ in range(9):    # 前9连
+            c, y = self.gacha_one(up, s3, s2, s1)
+            result.append(c)
+            hiishi += y
+        c, y = self.gacha_one(up, 1000, 0, 0)    # 保底第10抽
+        result.append(c)
+        hiishi += y
+
+        return result, hiishi
+
     def gacha_tenjou(self):
         result = {'up': [], 's3': [], 's2':[], 's1':[]}
         first_up_pos = 999999

@@ -45,6 +45,7 @@ gacha_10_aliases = ('抽十连', '十连', '十连！', '十连抽', '来个十�
 gacha_1_aliases = ('单抽', '单抽！', '来发单抽', '来个单抽', '来次单抽', '扭蛋单抽', '单抽扭蛋',
                    '單抽', '單抽！', '來發單抽', '來個單抽', '來次單抽', '轉蛋單抽', '單抽轉蛋')
 gacha_300_aliases = ('抽一井', '来一井', '来发井', '抽发井', '天井扭蛋', '扭蛋天井', '天井轉蛋', '轉蛋天井')
+gacha_fudai_aliases = ('必得','福袋', '必得三星')
 
 @sv.on_command('卡池资讯', deny_tip=GACHA_DISABLE_NOTICE, aliases=('查看卡池', '看看卡池', '康康卡池', '卡池資訊', '看看up', '看看UP'), only_to_me=False)
 async def gacha_info(session:CommandSession):
@@ -224,3 +225,32 @@ async def kakin(bot: NoneBot, ctx, match):
             count += 1
     if count:
         await bot.send(ctx, f"已为{count}位用户充值完毕！谢谢惠顾～")
+
+
+@sv.on_command('gacha_fudai', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_fudai_aliases, only_to_me=True)
+async def gacha_10(session:CommandSession):
+    SUPER_LUCKY_LINE = 170
+    uid = session.ctx['user_id']
+    gid = str(session.ctx['group_id'])
+    gacha = Gacha(_group_pool[gid])
+    result, hiishi = gacha.gacha_fudai()
+    silence_time = hiishi * 6 if hiishi < SUPER_LUCKY_LINE else hiishi * 60
+    if sv.bot.config.IS_CQPRO:
+        res1 = Chara.gen_team_pic(result[:5], star_slot_verbose=False)
+        res2 = Chara.gen_team_pic(result[5:], star_slot_verbose=False)
+        res = concat_pic([res1, res2])
+        res = pic2b64(res)
+        res = MessageSegment.image(res)
+        result = [f'{c.name}{"★"*c.star}' for c in result]
+        res1 = ' '.join(result[0:5])
+        res2 = ' '.join(result[5:])
+        res = f'{res}\n{res1}\n{res2}'
+    else:
+        result = [f'{c.name}{"★"*c.star}' for c in result]
+        res1 = ' '.join(result[0:5])
+        res2 = ' '.join(result[5:])
+        res = f'{res1}\n{res2}'
+
+    if hiishi >= SUPER_LUCKY_LINE:
+        await session.send('恭喜海豹！おめでとうございます！')
+    await session.send(f'素敵な仲間が増えますよ！\n{res}\n{SWITCH_POOL_TIP}', at_sender=True)
