@@ -85,6 +85,16 @@ class Gacha(object):
 
         return result, hiishi
 
+    def gacha_wai(self):
+        result = []
+        hiishi = 0
+        up = self.up_prob
+        for _ in range(10):    # 前10连
+            c, y = self.gacha_one(up, 1000, 0, 0)
+            result.append(c)
+            hiishi += y
+        return result, hiishi
+
     def gacha_tenjou(self):
         result = {'up': [], 's3': [], 's2':[], 's1':[]}
         first_up_pos = 999999
