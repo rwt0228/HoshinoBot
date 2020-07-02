@@ -263,7 +263,7 @@ async def gacha_wai(session:CommandSession):
     uid = session.ctx['user_id']
     gid = str(session.ctx['group_id'])
     gacha = Gacha(_group_pool[gid])
-    result, hiishi = gacha.gacha_fudai()
+    result, hiishi = gacha.gacha_wai()
     silence_time = hiishi * 6 if hiishi < SUPER_LUCKY_LINE else hiishi * 60
     if sv.bot.config.IS_CQPRO:
         res1 = Chara.gen_team_pic(result[:5], star_slot_verbose=False)
