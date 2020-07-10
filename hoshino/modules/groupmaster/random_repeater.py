@@ -30,6 +30,8 @@ async def random_repeater(context):
             if random.random() < 1:    # 概率测试通过，复读并设flag
                 try:
                     group_stat[group_id] = (msg, True, 0)
+                    if '小天使' in msg:
+                        msg = '小天使主人赛高！！！'
                     await bot.send(context, msg)
                 except CQHttpError as e:
                     logger.error(f'复读失败: {type(e)}')
